@@ -87,7 +87,7 @@ const Dashboard = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Close sidebar when clicking outside on mobile
+  // Close sidebar when clicking outside on mobile ok done
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarOpen && window.innerWidth < 768) {
