@@ -10,6 +10,7 @@ const EditPost = () => {
   const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
+  // state managment
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
