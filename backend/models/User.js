@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
+    bookmarks:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+    }],
     bio: String,
     avatar: String,
 }, {timestamps: true})

@@ -10,6 +10,7 @@ import SinglePost from './pages/SinglePost'
 import EditPost from './pages/EditPost'
 import UserProfile from './pages/UserProfile'
 import SearchUser from './pages/SearchUser'
+import Bookmark from './pages/Bookmark'
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
         <Route path="/edit-post/:id" element={<EditPost />} />
         <Route path='/users/:id' element={<UserProfile/>}/>
         <Route path="/search" element={<SearchUser   />} />
+        <Route path="/bookmarks" element={<Bookmark   />} />
 
         <Route path="/" element={
           <ProtectedRoute>

@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUserProfile, searchUsers, profilePicture } = require("../controllers/userController");
+const { getUserProfile, searchUsers, profilePicture, getBookmarks } = require("../controllers/userController");
 const multer = require("multer");
 const protect = require("../middleware/authMiddleware");
 
@@ -18,5 +18,6 @@ const router = express.Router();
 router.get("/search", searchUsers)
 router.get("/:id/profile", getUserProfile)
 router.put("/profile-pic",protect, upload.single("profilePicture"), profilePicture)
+router.get("/bookmarks", protect, getBookmarks)
 
 module.exports = router

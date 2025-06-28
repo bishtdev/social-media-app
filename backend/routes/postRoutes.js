@@ -1,5 +1,5 @@
 const express = require("express");
-const {createPost, getPosts, getPostById, updatePost, deletePost, likePost, commentPost, getUserProfile, replyToComment, toggleLikeComment} = require("../controllers/postController")
+const {createPost, getPosts, getPostById, updatePost, deletePost, likePost, commentPost, getUserProfile, replyToComment, toggleLikeComment, toggleBookmark} = require("../controllers/postController")
 const protect = require("../middleware/authMiddleware");
 const upload = require("../middleware/uploadMiddleware");
 
@@ -13,6 +13,7 @@ router.post("/:id/like",protect, likePost)
 router.post("/:id/comment", protect, commentPost)
 router.post("/:id/comment/:commentId/reply", protect, replyToComment)
 router.post("/:id/comment/:commentId/like", protect, toggleLikeComment)
+router.post("/:id/bookmarks", protect, toggleBookmark)
 
 
 router.route("/:id")

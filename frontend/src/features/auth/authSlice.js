@@ -69,6 +69,9 @@ updateUser: (state, action) => {
   // Save updated user to localStorage
   localStorage.setItem("user", JSON.stringify(state.user));
 },
+updateBookmarks: (state, action) => {
+    state.user.bookmarks = action.payload;
+},
   },
   extraReducers: (builder) => {
     builder
@@ -110,6 +113,6 @@ updateUser: (state, action) => {
   },
 });
 
-export const { logout, updateUser } = authSlice.actions;
+export const { logout, updateUser, updateBookmarks } = authSlice.actions;
 
 export default authSlice.reducer

@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
 const { profilePicture } = require("./userController");
 
 //create post
@@ -103,10 +104,10 @@ exports.likePost = async (req, res) => {
 
     // Fetch the updated post and return it
     const updatedPost = await Post.findById(req.params.id)
-    .populate("author","username")
-    .populate("comments.user", "username profilePicture")
-    .populate("comments.replies.user", "username profilePicture");
-    
+      .populate("author", "username")
+      .populate("comments.user", "username profilePicture")
+      .populate("comments.replies.user", "username profilePicture");
+
     res.status(200).json({ post: updatedPost });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -155,7 +156,7 @@ exports.replyToComment = async (req, res) => {
     const reply = {
       user: req.user._id,
       text,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
 
     comment.replies.push(reply);
@@ -172,7 +173,6 @@ exports.replyToComment = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 exports.toggleLikeComment = async (req, res) => {
   const { id, commentId } = req.params;
@@ -201,7 +201,30 @@ exports.toggleLikeComment = async (req, res) => {
       .populate("comments.replies.user", "username profilePicture");
 
     res.json(updatedPost); // full updated post with user data
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
+exports.toggleBookmark = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const postId = req.params.id;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const index = user.bookmarks.indexOf(postId);
+    if (index === -1) {
+      user.bookmarks.push(postId);
+    } else {
+      user.bookmarks.splice(index, 1);
+    }
+    await user.save();
+
+    // Populate bookmarks if you want, or just return bookmarks array
+    const updatedUser = await User.findById(userId).select("bookmarks");
+    res.json({ bookmarks: updatedUser.bookmarks });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

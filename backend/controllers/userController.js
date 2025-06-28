@@ -36,6 +36,20 @@ exports.searchUsers = async (req, res) =>{
   }
 }
 
+//middleware for user bookmarks
+exports.getBookmarks = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const bookmarks = await Post.find({
+      _id: { $in: user.bookmarks },
+    }).populate("author", "username profilePicture _id"); // <-- populate author
+
+    res.json(bookmarks);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 
 exports.profilePicture = async (req, res) => {
