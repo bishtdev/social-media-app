@@ -10,6 +10,7 @@ import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import { CiBookmark, CiBookmarkCheck } from "react-icons/ci";
 import Navbar from "../components/Navbar";
 import { updateBookmarks } from "../features/auth/authSlice";
+import { toast } from 'react-toastify';
 
 const SinglePost = () => {
     const {id} = useParams();
@@ -132,8 +133,11 @@ const handleBookmark = async () => {
     });
 
     dispatch(updateBookmarks(res.data.bookmarks)); // update Redux store only
+    const isNowBookmarked = res.data.bookmarks.includes(post._id);
+     toast.success(isNowBookmarked ? "Post bookmarked!" : "Bookmark removed!");
   } catch (error) {
     console.error(error);
+    toast.error("Something went wrong while bookmarking!");
   }
 };
 
